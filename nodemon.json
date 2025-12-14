@@ -1,0 +1,10 @@
+{
+  "watch": [".", "../.."],
+  "ext": "ts,js",
+  "exec": "tsx index.ts",
+  "delay": 2000,
+  "ignore": ["node_modules/", "./dist/"],
+  "env": {
+    "FORCE_COLOR": "1"
+  }
+}
