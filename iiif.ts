@@ -7,7 +7,7 @@ import { iiifImagePath, iiifpathPrefix, fileTemplate } from './config';
 const streamImageFromFile = async ({ id }: { id: string }) => {
   const filename = fileTemplate.replace(/\{id\}/, id);
   const file = path.join(iiifImagePath, filename);
-  console.log('!', file)
+  console.log('Loading file:', file);
   if (!fs.existsSync(file)) {
     throw new IIIFError('Not Found', { statusCode: 404 });
   }
