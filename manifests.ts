@@ -91,7 +91,6 @@ export default async function createRouter() {
     })
     // delete an existing manifest with id
     .delete((req, res) => {
-      // TODO: Rudimentary authentication
       res
         .status(404)
         .json({ message: 'Deleting manifests is currently not supported' })
