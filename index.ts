@@ -5,6 +5,7 @@ import { logger } from '@tinyhttp/logger';
 import serveStatic from 'serve-static';
 import { port, iiifImagePath } from './config';
 import IIIFRouter from './iiif';
+import ManifestsRouter from './manifests';
 
 const setHeaders = (res: any) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -30,6 +31,7 @@ app
   .use(logger({ emoji: true }))
   .use('/iiif/2', IIIFRouter(2))
   .use('/iiif/3', IIIFRouter(3))
+  .use('/manifests', await ManifestsRouter())
   .use('/openseadragon', serveStatic('./node_modules/openseadragon/build/openseadragon'))
   .use('/images', serveStatic('./node_modules/openseadragon/build/openseadragon/images'))
   .use('/', serveStatic('./public', { setHeaders }))
