@@ -33,6 +33,7 @@ const streamImageFromFile = async ({ id }: { id: string }) => {
 // }
 
 const render = async (req: any, res: any) => {
+  console.log(req)
   if (req.params && req.params.filename == null) {
     req.params.filename = 'info.json';
   }
