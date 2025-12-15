@@ -89,12 +89,12 @@ export default async function createRouter() {
       fs.writeFileSync(req.fullManifestPath, JSON.stringify(req.body))
       res.status(200).json({ message: 'Manifest successfully updated' })
     })
-    // delete an existing manifest with id
-    .delete((req, res) => {
-      res
-        .status(404)
-        .json({ message: 'Deleting manifests is currently not supported' })
-    })
+    // // delete an existing manifest with id
+    // .delete((req, res) => {
+    //   res
+    //     .status(404)
+    //     .json({ message: 'Deleting manifests is currently not supported' })
+    // })
 
   return router
 }
