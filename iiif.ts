@@ -41,7 +41,10 @@ const render = async (req: any, res: any) => {
   const iiifUrl = `${req.protocol}://${req.get('host')}${req.path}`;
   const iiifProcessor = new Processor(iiifUrl, streamImageFromFile, {
     pathPrefix: iiifpathPrefix,
-    debugBorder: !!process.env.DEBUG_IIIF_BORDER
+    debugBorder: !!process.env.DEBUG_IIIF_BORDER,
+    sharpOptions: {
+      failOn: 'error' 
+    };
   });
   const result = await iiifProcessor.execute();
   return res
