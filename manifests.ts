@@ -49,7 +49,17 @@ const formatManifestURI = (host, id) => {
 export default async function createRouter() {
   const router = new App()
 
-  
+  router.use((_req, res, next) => {
+    res.set('Access-Control-Allow-Headers', '*');
+    res.set('Access-Control-Allow-Methods', 'OPTIONS, HEAD, GET, POST, PUT, DELETE');
+    res.set('Access-Control-Allow-Origin', '*');
+    next();
+  });
+
+  router.options('*', (_req, res) => {
+    res.status(204).send('');
+  });
+
   router.use(await json({ payloadLimit: 50_000_000 /* 50 mb */ }))
 
   router
