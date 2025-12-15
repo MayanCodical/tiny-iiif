@@ -44,7 +44,7 @@ const render = async (req: any, res: any) => {
     debugBorder: !!process.env.DEBUG_IIIF_BORDER,
     sharpOptions: {
       failOn: 'error' 
-    };
+    }
   });
   const result = await iiifProcessor.execute();
   return res
