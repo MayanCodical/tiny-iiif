@@ -5,8 +5,9 @@ import path from 'path';
 import { iiifImagePath, iiifpathPrefix, fileTemplate } from './config';
 
 const streamImageFromFile = async ({ id }: { id: string }) => {
-  const filename = fileTemplate.replace(/\{\{id\}\}/, id);
+  const filename = fileTemplate.replace(/\{id\}/, id);
   const file = path.join(iiifImagePath, filename);
+  console.log('!', file)
   if (!fs.existsSync(file)) {
     throw new IIIFError('Not Found', { statusCode: 404 });
   }
@@ -33,7 +34,6 @@ const streamImageFromFile = async ({ id }: { id: string }) => {
 // }
 
 const render = async (req: any, res: any) => {
-  console.log(req)
   if (req.params && req.params.filename == null) {
     req.params.filename = 'info.json';
   }
@@ -64,6 +64,7 @@ function createRouter (version: number) {
   router.options('*', (_req, res) => {
     res.status(204).send('');
   });
+
   router.get('/', (_req, res) => res.status(200).send(`IIIF v${version}.x endpoint OK`));
   router.get('/:id', render);
   router.get('/:id/info.json', render);

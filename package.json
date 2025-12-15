@@ -6,7 +6,7 @@
   "main": "index.ts",
   "scripts": {
     "dev": "IIIF_IMAGE_PATH=${IIIF_IMAGE_PATH:-./tiff} nodemon",
-    "start": "tsx index.ts",
+    "start": "npm run tiny-iiif",
     "lint": "eslint *.ts",
     "lint-fix": "eslint --fix *.ts",
     "tiny-iiif": "IIIF_IMAGE_PATH=./tiff tsx index.ts",
