@@ -4,16 +4,21 @@ import fs from 'fs';
 import path from 'path';
 import { iiifImagePath, iiifpathPrefix, fileTemplate } from './config';
 
-const streamImageFromFile = async ({ id }: { id: string }) => {
-  const filename = fileTemplate.replace(/\{id\}/, id);
-  const file = path.join(iiifImagePath, filename);
-  console.log('Loading file:', file);
-  if (!fs.existsSync(file)) {
-    throw new IIIFError('Not Found', { statusCode: 404 });
-  }
-  return fs.createReadStream(file);
-};
 
+// Supported image file extensions - in order of quality
+const SUPPORTED_EXTENSIONS = ['tif', 'tiff', 'png', 'pdf', 'webp', 'jp2', 'jpg', 'jpeg', 'gif'];
+
+const streamImageFromFile = async ({ id }: { id: string }) => {
+  for (const ext of SUPPORTED_EXTENSIONS) {
+    const filename = fileTemplate.replace(/\{id\}/, id).replace(/\{ext\}/, ext);
+    const file = path.join(iiifImagePath, filename);
+    console.log('Loading file:', file);
+    if (fs.existsSync(file)) {
+      return fs.createReadStream(file);
+    }
+  }
+  throw new IIIFError('Not Found', { statusCode: 404 });
+};
 
 // import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
@@ -43,7 +48,7 @@ const render = async (req: any, res: any) => {
     pathPrefix: iiifpathPrefix,
     debugBorder: !!process.env.DEBUG_IIIF_BORDER,
     sharpOptions: {
-      failOn: 'error' 
+      failOn: 'error'
     }
   });
   const result = await iiifProcessor.execute();
@@ -54,7 +59,7 @@ const render = async (req: any, res: any) => {
     .send(result.body);
 };
 
-function createRouter (version: number) {
+function createRouter(version: number) {
   const router = new App();
 
   router.use((_req, res, next) => {
